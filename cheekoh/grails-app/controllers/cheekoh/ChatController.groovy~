@@ -1,0 +1,6 @@
+package cheekoh
+
+class ChatController {
+
+    def index() { }
+}
