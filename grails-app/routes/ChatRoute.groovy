@@ -9,7 +9,9 @@ class ChatRoute extends RouteBuilder {
     void configure() {
 		def config = grailsApplication?.config
 		
-		from('seda:inboundChat').to('websocket:chat?sendToAll=true')
+		log.debug 'configure()'    
+		
+		//from('seda:inboundChat').to('websocket:chat?sendToAll=true')
 		//from('seda:inboundChat').to('stream:out')
         
 		// example:

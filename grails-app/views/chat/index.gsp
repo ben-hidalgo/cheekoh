@@ -5,6 +5,7 @@
 		<title>Chat</title>
 		<g:javascript library="jquery" />
 		<g:javascript src="chat.js" />
+		<g:javascript src="purl.js" />
 		    
 
 	</head>
@@ -25,7 +26,7 @@
 	    
 	    <g:formRemote name="myForm" on404="alert('not found!')" update="chat-updates" url="[controller: 'chat', action:'submit']">
               
-	           Room: <g:textField name="room"/>
+	           Room: <g:textField name="roomName"/>
 	           <g:submitToRemote update="chat-updates" url="[action:'assign']" value="Change Room"/> 
 	           <br/>
 	           Comment: <g:textField name="comment"/>
@@ -35,7 +36,9 @@
 
 
 		<script type='text/javascript'>
-    		room.join("Testing");
+    		var url = purl();
+    		var roomName = url.param('roomName');
+    		room.join(roomName);
 		</script>
 	</body>
 </html>
