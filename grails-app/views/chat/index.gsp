@@ -4,40 +4,9 @@
 		<meta name="layout" content="main">
 		<title>Chat</title>
 		<g:javascript library="jquery" />
+		<g:javascript src="chat.js" />
 		    
-		<script type='text/javascript'>
 
-        if (!window.WebSocket) {
-	        alert("WebSocket not supported by this browser");
-        }
-
-        function $() { return document.getElementById(arguments[0]); }
-
-        var room = {
-	        join: function(name) {
-		        this._username=name;
-		        var location = "ws://localhost:9292/chat";
-		        this._ws=new WebSocket(location);
-		        this._ws.onmessage=this._onmessage;
-		        this._ws.onclose=this._onclose;
-	        },
-
-	        _onmessage: function(m) {
-		        //alert(m.data)
-	        	
-		        if (m.data){    
-		            var parsedJson = $.parseJSON(m.data);
-		        	$('#chat-updates').append('<span>'+parsedJson.people.person.firstName+' '+ parsedJson.people.person.lastName +'</span><br/>');
-		        }
-	        },
-
-	        _onclose: function(m) {
-		        this._ws=null;
-	        }
-
-        };
-
-    </script>
 	</head>
 	<body>
 		<div class="nav" role="navigation">
@@ -56,9 +25,11 @@
 	    
 	    <g:formRemote name="myForm" on404="alert('not found!')" update="chat-updates" url="[controller: 'chat', action:'submit']">
               
-	           Room: <g:textField name="room"/><br/>
-	           Comment: <g:textField name="comment"/><br/>
-               <g:submitToRemote update="chat-updates" url="[action:'submit']" value="Submit"/> 
+	           Room: <g:textField name="room"/>
+	           <g:submitToRemote update="chat-updates" url="[action:'assign']" value="Change Room"/> 
+	           <br/>
+	           Comment: <g:textField name="comment"/>
+               <g:submitToRemote update="chat-updates" url="[action:'submit']" value="Post"/> 
         </g:formRemote>
 
 
