@@ -2,5 +2,12 @@ package cheekoh
 
 class HomeController {
 
-    def index() { }
+    def index() { 
+        [popularRooms: 
+            [
+                [displayName: 'Ex Wy Ze', roomName: 'xyz'], 
+                [displayName: 'Ay Be Se', roomName: 'abc']
+            ]
+        ]
+    }
 }

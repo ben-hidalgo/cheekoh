@@ -13,7 +13,6 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:remoteLink class="" controller="chat" action="submit" update="chat-updates">Submit</g:remoteLink></li>
 			</ul>
 		</div>
 		
@@ -24,21 +23,26 @@
 			<div id="chat-updates" style="margin: 0.8em 1em 0.3em; padding: 0 0.25em"></div>
 	    </div>
 	    
-	    <g:formRemote name="myForm" on404="alert('not found!')" update="chat-updates" url="[controller: 'chat', action:'submit']">
+	    <g:form name="changeRoomForm" method="get">
               
 	           Room: <g:textField name="roomName"/>
-	           <g:submitToRemote update="chat-updates" url="[action:'assign']" value="Change Room"/> 
-	           <br/>
+	           <g:actionSubmit value="Change Room" action="assign"/>
+
+        </g:form>
+        
+	    <g:formRemote name="myForm" on404="alert('not found!')" update="chat-updates" url="[controller: 'chat', action:'submit']">
+               <g:hiddenField name="hiddenRoomName" />
 	           Comment: <g:textField name="comment"/>
                <g:submitToRemote update="chat-updates" url="[action:'submit']" value="Post"/> 
         </g:formRemote>
-
 
 
 		<script type='text/javascript'>
     		var url = purl();
     		var roomName = url.param('roomName');
     		room.join(roomName);
+    		$("#roomName").val(url.param('roomName'));
+    		$("#hiddenRoomName").val(url.param('roomName'));
 		</script>
 	</body>
 </html>

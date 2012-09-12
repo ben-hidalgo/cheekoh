@@ -12,7 +12,7 @@ class ChatController {
     def index() { 
     
         def routeExists = false
-        log.debug "index() camelContext.routes=${camelContext.routes}"
+        log.debug "index() request=${request}"
         for(org.apache.camel.Route route : camelContext.routes) {
             log.debug("index() route.endpoint.endpointUri=${route.endpoint.endpointUri}")
             //def s1 = 
@@ -35,14 +35,16 @@ class ChatController {
     
     def submit() {
         
-        log.debug "submit() ${params}"
+        log.debug "submit() request=    ${request.parameterMap}"
         
         def response = gspToStringService.toString('chat\\submit-comment.gsp', [comment: params.comment]) 
        
-        sendMessage('seda:inbound'+params.roomName, response)
+        sendMessage('seda:inbound'+params.hiddenRoomName, response)
     }
     
     def assign() {
+        
+        redirect (action: 'index', params: [roomName: params.roomName])
         
         //render (view:'editAjax', model: [])
 
